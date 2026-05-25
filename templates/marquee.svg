@@ -1,0 +1,40 @@
+<svg width="{{.Width}}" height="{{.Height}}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {{.Width}} {{.Height}}">
+  <defs>
+    <style>
+      {{.FontCSS}}
+      .marquee-text {
+        font-family: '{{.Font}}', sans-serif;
+        font-size: {{.FontSize}}px;
+        font-weight: {{.Weight}};
+        fill: {{.Color}};
+        white-space: pre;
+      }
+    </style>
+  </defs>
+
+  <g transform="rotate({{.Rotate}} {{.CX}} {{.CY}})">
+    {{if .Bg}}
+    <rect x="-{{.Width}}" y="{{.RectY}}" width="{{.WidthX4}}" height="{{.RectHeight}}" fill="{{.Bg}}" />
+    {{end}}
+    
+    <g>
+      <!-- SMIL animation translating exactly by our locked exactWidth -->
+      <animateTransform 
+        attributeName="transform" 
+        type="translate" 
+        from="0 0" 
+        to="-{{.ExactWidth}} 0" 
+        dur="{{.Duration}}" 
+        repeatCount="indefinite" 
+        calcMode="linear" />
+      
+      <!-- 
+        By adding textLength and lengthAdjust="spacing", we force the browser 
+        to match our exact translation width. No more overlapping!
+      -->
+      <text x="0" y="{{.TextY}}" class="marquee-text" xml:space="preserve" textLength="{{.ExactWidth}}" lengthAdjust="spacing">{{.BaseText}}</text>
+      <text x="{{.ExactWidth}}" y="{{.TextY}}" class="marquee-text" xml:space="preserve" textLength="{{.ExactWidth}}" lengthAdjust="spacing">{{.BaseText}}</text>
+      <text x="{{.ExactWidthX2}}" y="{{.TextY}}" class="marquee-text" xml:space="preserve" textLength="{{.ExactWidth}}" lengthAdjust="spacing">{{.BaseText}}</text>
+    </g>
+  </g>
+</svg>
