@@ -1,8 +1,9 @@
 name: Release Binaries
 
 on:
-  release:
-    types: [created, edited]
+  push:
+    tags:
+      - "v*.*.*"
 
 jobs:
   releases-matrix:
