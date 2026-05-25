@@ -9,7 +9,7 @@ jobs:
   releases-matrix:
     name: Release Go Binary
     permissions:
-      contents: read
+      contents: write
     runs-on: ubuntu-latest
 
     strategy:
